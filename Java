@@ -1,0 +1,132 @@
+import java.util.*;
+
+public class hangman {
+  
+ 	public static void main(String[] args){
+	 	Scanner sc = new Scanner(System.in);
+	 	int wrong = 0;
+	 	String incorrect = " ";
+	 	String alpha = "abcdefghijklmnopqrstuvwxyz";
+	 	String word = getWord();
+	 	char guess;
+	 	StringBuilder hidden = new StringBuilder(word);
+	 	for(int i = 0; i < word.length(); i++){
+	 		hidden.setCharAt(i, '#');
+	 	}
+	 	System.out.println(hidden);
+	 	while(wrong < 6){
+	 		System.out.println("\nEnter your guess: ");
+		 	guess = sc.next().charAt(0);
+	 		if(alpha.contains(String.valueOf(guess)) && !incorrect.contains(String.valueOf(guess)) && word.contains(String.valueOf(guess))){
+	 		int counter = word.indexOf(guess);
+		 	while(counter >= 0){
+		 		hidden.setCharAt(counter, guess);
+		 		counter = word.indexOf(guess, counter+1);
+	 		} 
+	 	}else if(!alpha.contains(String.valueOf(guess))){
+	 		System.out.println("Please enter a valid character");
+	 	}else if(incorrect.contains(String.valueOf(guess)) || hidden.toString().contains(String.valueOf(guess))){
+	 		System.out.println("You have already tried this character");
+	 	}else if(!word.contains(String.valueOf(guess))){
+	 		incorrect = incorrect.concat(String.valueOf(guess));
+	 		wrong++;
+		 	printMan(wrong);
+	 		System.out.println("Your incorrect choices are: " + incorrect);
+	 	}
+	 	System.out.print(hidden + "\n");
+	 		//*applyGuess(guess, alpha, hidden, incorrect, word, wrong);
+		 	if(word.equals(hidden.toString())){
+	 			System.out.println("Congrats you have won! The word was " + word);
+			 	break;
+		 	}
+	 	}
+	 	if(wrong == 6){
+	 	System.out.println("Game Over you LOST! \nThe word was: " + word);
+	 	}
+	 }
+ 	public static int applyGuess(char guess, String alpha, StringBuilder hidden, String incorrect,String word, int wrong){
+	 	if(alpha.contains(String.valueOf(guess)) && !incorrect.contains(String.valueOf(guess)) && word.contains(String.valueOf(guess)) && !hidden.toString().contains(String.valueOf(guess))){
+	 		int counter = word.indexOf(guess);
+		 	while(counter >= 0){
+		 		hidden.setCharAt(counter, guess);
+		 		counter = word.indexOf(guess, counter+1);
+	 		} 
+	 	}else if(!alpha.contains(String.valueOf(guess))){
+	 		System.out.println("Please enter a valid character");
+	 	}else if(incorrect.contains(String.valueOf(guess)) || hidden.toString().contains(String.valueOf(guess))){
+	 		System.out.println("You have already tried this character");
+	 	}else if(!word.contains(String.valueOf(guess))){
+	 		incorrect = incorrect.concat(String.valueOf(guess));
+	 		wrong++;
+		 	printMan(wrong);
+	 		System.out.println("Your incorrect choices are: " + incorrect);
+	 	}
+	 	System.out.print(hidden + "\n");
+	 	return wrong;
+ 	} 
+ 	public static String getWord(){
+	 	String[] words = {"guess" ,"chores" , "phone" , "bored" , "name" , "horse", "joselito"};
+	 	Random rando = new Random();
+	 	int upperbound = 7;
+	 	int randNum = rando.nextInt(upperbound);
+	 	String word = words[randNum];
+	 	return word;
+ 	}
+	public static void printMan(int wrong){
+		if(wrong == 1){
+			System.out.println("	 ____");
+			System.out.println("	 |	 |") ;
+			System.out.println("	 |      O");
+			System.out.println("	 |");
+			System.out.println("	 |");
+			System.out.println("	 |");
+			System.out.println("	 |");
+			System.out.println("____|_______");
+		}else if(wrong == 2){
+			System.out.println("	 ____");
+			System.out.println("	 |	 |") ;
+			System.out.println("	 |      O");
+			System.out.println("	 |	 |");
+			System.out.println("	 |	 |");
+			System.out.println("	 |");
+			System.out.println("	 |");
+			System.out.println("____|_______");
+		}else if(wrong == 3){
+			System.out.println("	 ____");
+			System.out.println("	 |	 |") ;
+			System.out.println("	 |      O");
+			System.out.println("	 |     / |");
+			System.out.println("	 |	 |");
+			System.out.println("	 |");
+			System.out.println("	 |");
+			System.out.println("____|_______");
+		}else if(wrong == 4){
+			System.out.println("	 ____");
+			System.out.println("	 |	 |") ;
+			System.out.println("	 |      O");
+			System.out.println("	 |     / | \\");
+			System.out.println("	 |	 |");
+			System.out.println("	 |");
+			System.out.println("	 |");
+			System.out.println("____|_______");
+		}else if(wrong == 5){
+			System.out.println("	 ____");
+			System.out.println("	 |	 |") ;
+			System.out.println("	 |      O");
+			System.out.println("	 |     / | \\");
+			System.out.println("	 |	 |");
+			System.out.println("	 |     /");
+			System.out.println("	 |");
+			System.out.println("____|_______");
+		}else if(wrong == 6){
+			System.out.println("	 ____");
+			System.out.println("	 |	 |") ;
+			System.out.println("	 |      O");
+			System.out.println("	 |     / | \\");
+			System.out.println("	 |	 |");
+			System.out.println("	 |     /  \\");
+			System.out.println("	 |");
+			System.out.println("____|_______");
+		}
+	}
+}
